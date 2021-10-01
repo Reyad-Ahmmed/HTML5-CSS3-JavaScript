@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Async operation</title>
+        <style>
+            html,*{
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+            body{
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+               
+            }
+            .overlay{
+                z-index: 1000;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                position: fixed;
+                background-color: rgb(97, 110, 110);
+                display: none;
+            }
+            .message{
+                z-index: 1000;
+                top: 0;
+                left: 0;
+                width: 300px;
+                height: 200px;
+                margin:10% auto;
+                border-radius: 50px;
+                text-align: center;
+                background-color: rgb(21, 100, 100);
+                color: white;
+                padding: 10px;
+                display: none;
+            }
+            #show{
+                padding:7px 20px;
+                background-color: rgb(34, 33, 33);
+                color:white;
+                border-radius: 20px;
+                border: 2px solid red;
+                cursor: pointer;
+                margin: 30px 50px;
+            }
+            #close{
+                padding:7px 20px;
+                background-color: rgb(34, 33, 33);
+                color:white;
+                border-radius: 20px;
+                border: 2px solid red;
+                cursor: pointer;
+                margin-top:20px;
+            }
+             /* navbar */
+
+            nav{
+                width: 100%;
+            }
+            nav ul li{
+                background-color: rgb(122, 120, 120);
+                padding:20px 0;
+                list-style: none;
+            }
+            nav ul li a{
+                background-color: rgb(226, 178, 155);
+                padding:20px 25px;
+                color:black;
+                text-decoration: none;
+            }
+        </style>
+        <script src="./Script/jquery.js"></script>
+        <script>
+            $(document).ready(()=>{
+                $('#show').click(()=>{
+                    $('.overlay').show(1000).promise()
+                    .pipe(()=>{
+                        $('.message').slideDown(500).promise()
+                        .then(()=>{
+                            $('.time').html(showTime());
+                        })
+                    })
+                })
+                $('#close').click(()=>{
+                    $('.message').slideUp(500).promise()
+                    .pipe(()=>{
+                        $('.overlay').hide(1000);
+                    })
+                })
+            })
+            function showTime(){
+                var t = new Date();
+                return `Time Now: ${t.toLocaleTimeString()}`;
+            }
+        </script>
+    </head>
+   
+
+    <body>
+        <div class="main">
+            <nav>
+                <ul>
+                    <li>
+                        
+                        <a href="/index.html">Home</a>
+                        <a href="./chat.html">Chat Room</a>
+                        <a href="./async.html">Async Operation</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+
+        <button id="show">Show</button>
+        <div class="overlay">
+            <div class="message">
+                <h3 style="text-transform: capitalize; margin: 10px;">time animation</h3>
+                <div class="time" style="margin:10px"></div>
+                <button id="close">Close</button>
+            </div>
+        </div>
+    </body>
+</html>

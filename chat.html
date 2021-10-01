@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chat Room</title>
+        <style>
+            html,*{
+                padding:0;
+                margin:0;
+            }
+            body{
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+            .input{
+                background-color: rgb(131, 127, 127);
+                width: 100%;
+                text-align: center;
+            }
+            input[type=text]{
+                width: 300px;
+                text-align: center;
+                padding: 7px;
+                border-right: none;
+                border: 1px solid gray;
+                background-color: rgb(228, 222, 222);
+                border-radius: 10px 0 0 10px;
+            }
+            #b{
+                padding: 7px 20px;
+                border-left: none;
+                border: 1px solid gray;
+                border-radius: 0 10px 10px 0;
+                cursor: pointer;
+            }
+	#box{
+		text-align:center;
+		margin:10px auto;
+	}
+            h2{
+                background-color: rgb(160, 155, 155);
+                text-align: center;
+                padding: 10px;
+                margin:  0 0 10px 0 ;
+            }
+	.users{
+		text-align:center;
+		width:15%;
+		margin:10px 20px;
+		background-color:#F5A484;
+		border-radius:10px;
+	}
+	#names{
+		margin:10px 10px;
+		list-style:none;
+		padding:5px;
+	}
+	#messages{
+		width: 300px;
+                text-align: center;
+		margin:10px auto;
+                padding: 7px;
+                background-color: rgb(228, 222, 222);
+                border-radius: 10px;
+		display:none;
+		list-style:none;
+	}
+            /* navbar */
+
+            
+            nav{
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            nav ul li{
+                background-color: rgb(122, 120, 120);
+                padding:20px 0;
+                list-style: none;
+            }
+            nav ul li a{
+                background-color: rgb(226, 178, 155);
+                padding:20px 25px;
+                color:black;
+                text-decoration: none;
+            }
+		nav ul li a:hover{
+			background-color:#F9D4C6;
+			font-weight:700;
+		}
+        </style>
+        <script src="./Script/jquery.js"></script>
+        <script src="./Script/socket.io.js"></script>
+        <script>
+             $(document).ready(() => {
+        var socket = io.connect("http://localhost:8888");
+        socket.on("connect", () => {
+          var name = prompt("Dispaly name?");
+
+          socket.emit("join", name);
+
+          $("#b").click(() => {
+            socket.emit("send", $("#m").val());
+		$('#messages').show();
+		$('#m').val("");
+          });
+        });
+
+        socket.on("message", (data) => {
+          $("#messages").append(`<li>${data.from}: ${data.msg}</li>`);
+	
+        });
+
+        socket.on("updateusers", (names) => {
+          $("#names").empty();
+          $.each(names, (i, v) => {
+            $("#names").append(`<li>${v}</li>`);
+          });
+        });
+
+      });
+
+        </script>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li>
+                    <a href="./index.html">Home</a>
+                    <a href="./chat.html">Chat Room</a>
+                    <a href="./async.html">Time Animation</a>
+                </li>
+            </ul>
+        </nav>
+        <h2 style="background-color:black; color:white;">Let's join</h2>
+
+
+         <div id="chat">
+
+      <div class="users">
+        <h4 style="padding: 5px; background-color:black; color:white; border-radius: 10px 10px 0 0">Users</h4>
+        <ul id="names"></ul>
+      </div>
+
+      <div id="box">
+        <div><input type="text" id="m" /><button id="b">Send</button></div>
+        <div>
+          <ul id="messages"></ul>
+        </div>
+      </div>
+    </body>
+</html>

@@ -1,0 +1,41 @@
+.navbar{
+    width: 200px;
+    background-color: rgb(36, 35, 35);
+    border-radius: 0 10px 10px 0;
+}
+
+nav{
+    width: 100%;
+}
+
+nav ul li{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    list-style: none;
+    
+}
+
+nav ul li a{
+    width: 200px;
+    background-color: rgb(56, 55, 53);
+    text-decoration: none;
+    color:black;
+    padding: 10px 20px;
+    margin-bottom: 5px;
+    text-align: center;
+    color: white;
+    border-radius:10px;
+}
+
+nav ul li a:hover{
+    background-color: blanchedalmond;
+    color:black;
+    font-weight: 700;
+}
+
+footer{
+    height: 72px;
+    background-color: aquamarine;
+}
